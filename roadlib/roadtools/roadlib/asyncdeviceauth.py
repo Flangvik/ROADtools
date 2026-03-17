@@ -74,7 +74,7 @@ class AsyncDeviceAuthentication(DeviceAuthentication):
             "scope": "openid aza ugs",
             # Not sure if these matter
             "group_sids": [],
-            "win_ver": "10.0.19041.868",
+            "win_ver": "10.0.26100.3476",
             "grant_type": "urn:ietf:params:oauth:grant-type:jwt-bearer",
             # Windows includes this, but it is not required or used
             # user is instead taken from JWT assertion
@@ -86,7 +86,7 @@ class AsyncDeviceAuthentication(DeviceAuthentication):
     async def register_winhello_key(self, pubkeycngblob, access_token):
         headers = {
             'Authorization': f'Bearer {access_token}',
-            'User-Agent': 'Dsreg/10.0 (Windows 10.0.19044.1826)',
+            'User-Agent': 'Dsreg/10.0 (Windows 10.0.26100.3476)',
             'Content-Type': 'application/json',
             'Accept': 'application/json',
         }
@@ -116,7 +116,7 @@ class AsyncDeviceAuthentication(DeviceAuthentication):
 
         if not os_version:
             if device_type.lower() == "windows":
-                os_version = "10.0.19041.928"
+                os_version = "10.0.26100.3476"
             elif device_type.lower() == "macos":
                 os_version = "12.2.0"
             elif device_type.lower() == "macos14":
@@ -290,7 +290,7 @@ class AsyncDeviceAuthentication(DeviceAuthentication):
             device_type = "Windows"
 
         if not os_version:
-            os_version = "10.0.19041.928"
+            os_version = "10.0.26100.3476"
 
         # Output keys have the _aad suffix to prevent overwriting original cert + key
         certout = device_name.lower() + '_aad.pem'
@@ -511,7 +511,7 @@ class AsyncDeviceAuthentication(DeviceAuthentication):
             "scope": "openid aza ugs",
             # Not sure if these matter
             "group_sids": [],
-            "win_ver": "10.0.19041.868",
+            "win_ver": "10.0.26100.3476",
             "grant_type": "password",
             "username": username,
             "password": password,
@@ -527,7 +527,7 @@ class AsyncDeviceAuthentication(DeviceAuthentication):
             "scope": "openid aza ugs",
             # Not sure if these matter
             "group_sids": [],
-            "win_ver": "10.0.19041.868",
+            "win_ver": "10.0.26100.3476",
             "grant_type": "urn:ietf:params:oauth:grant-type:saml1_1-bearer",
             "assertion": base64.b64encode(samltoken.encode('utf-8')).decode('utf-8'),
         }
@@ -558,7 +558,7 @@ class AsyncDeviceAuthentication(DeviceAuthentication):
             "scope": "openid aza ugs",
             # Not sure if these matter
             "group_sids": [],
-            "win_ver": "10.0.19041.868",
+            "win_ver": "10.0.26100.3476",
             "grant_type": "refresh_token",
             "refresh_token": refresh_token,
         }
@@ -576,7 +576,7 @@ class AsyncDeviceAuthentication(DeviceAuthentication):
             "previous_refresh_token": self.prt,
             # Not sure if these matter
             "group_sids": [],
-            "win_ver": "10.0.19041.868",
+            "win_ver": "10.0.26100.3476",
         }
         responsedata = await self.request_token_with_sessionkey_signed_payload(payload)
         prtdata = self.auth.decrypt_auth_response(responsedata, self.session_key, True)
@@ -589,7 +589,7 @@ class AsyncDeviceAuthentication(DeviceAuthentication):
         """
         client = self.auth.lookup_client_id(client_id).lower()
         payload = {
-            "win_ver": "10.0.19041.1620",
+            "win_ver": "10.0.26100.3476",
             "scope": "openid",
             "refresh_token": self.prt,
             "redirect_uri": f"ms-appx-web://Microsoft.AAD.BrokerPlugin/{client}",

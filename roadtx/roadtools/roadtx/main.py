@@ -99,7 +99,7 @@ def main():
     device_parser.add_argument('-d','--domain',action='store',help='Target domain to join to (default: iminyour.cloud)')
     device_parser.add_argument('--access-token', action='store', help='Access token for device registration service. If not specified, taken from .roadtools_auth')
     device_parser.add_argument('--device-type', action='store', help='Device OS type (default: Windows)')
-    device_parser.add_argument('--os-version', action='store', help='Device OS version (default: 10.0.19041.928)')
+    device_parser.add_argument('--os-version', action='store', help='Device OS version (default: 10.0.26100.3476)')
     device_parser.add_argument('--deviceticket', action='store', help='Device MSA ticket to match with existing device')
     device_parser.add_argument('-ua', '--user-agent', action='store',
                                help='Custom request user agent to use. Default: Depends on device type')
@@ -114,7 +114,7 @@ def main():
     hdevice_parser.add_argument('-n', '--name', action='store', help='Device display name (default: DESKTOP-<RANDOM>)')
     hdevice_parser.add_argument('-d','--domain',action='store',help='Target domain to join to (default: iminyour.cloud)')
     hdevice_parser.add_argument('--device-type', action='store', help='Device OS type (default: Windows)')
-    hdevice_parser.add_argument('--os-version', action='store', help='Device OS version (default: 10.0.19041.928)')
+    hdevice_parser.add_argument('--os-version', action='store', help='Device OS version (default: 10.0.26100.3476)')
     hdevice_parser.add_argument('--sid', action='store', required=True, help='Device SID in AD')
     hdevice_parser.add_argument('-t', '--tenant', action='store', required=True, help='Tenant ID where device exists')
     hdevice_parser.add_argument('-ua', '--user-agent', action='store',
@@ -167,7 +167,7 @@ def main():
     winhello_parser.add_argument('-k', '--key-pem', action='store', metavar='file', help='Private key file for key storage (default: winhello.key)')
     winhello_parser.add_argument('--access-token', action='store', help='Access token for device registration service. If not specified, taken from .roadtools_auth')
     winhello_parser.add_argument('-ua', '--user-agent', action='store',
-                                 help='Custom user agent to use. Default: Dsreg/10.0 (Windows 10.0.19044.1826)')
+                                 help='Custom user agent to use. Default: Dsreg/10.0 (Windows 10.0.26100.3476)')
 
     # Construct winhello key generation module - included for reference
     # winhello_parser = subparsers.add_parser('genhellokey', help='Generate Windows Hello key')

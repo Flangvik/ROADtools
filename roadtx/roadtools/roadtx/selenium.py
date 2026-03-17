@@ -5,6 +5,7 @@ import codecs
 import json
 from urllib.parse import urlparse, parse_qs, quote_plus
 from roadtools.roadlib.auth import Authentication, AuthenticationException, get_data, WELLKNOWN_CLIENTS, WELLKNOWN_RESOURCES
+from roadtools.roadlib.constants import DEFAULT_USER_AGENT
 from roadtools.roadlib.deviceauth import DeviceAuthentication
 from roadtools.roadtx.keepass import HackyKeePassFileReader
 from seleniumwire.webdriver import FirefoxOptions
@@ -353,11 +354,11 @@ class SeleniumAuthentication():
             if self.auth.user_agent:
                 request.headers['User-Agent'] = self.auth.user_agent
             else:
-                request.headers['User-Agent'] = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.5060.134 Safari/537.36 Edg/103.0.1264.71'
-                request.headers['Sec-Ch-Ua'] = '" Not;A Brand";v="99", "Microsoft Edge";v="103", "Chromium";v="103"'
+                request.headers['User-Agent'] = DEFAULT_USER_AGENT
+                request.headers['Sec-Ch-Ua'] = '"Chromium";v="134", "Microsoft Edge";v="134", "Not:A-Brand";v="24"'
                 request.headers['Sec-Ch-Ua-Mobile'] =  '?0'
                 request.headers['Sec-Ch-Ua-Platform'] =  '"Windows"'
-                request.headers['Sec-Ch-Ua-Platform-Version'] = '"10.0.0"'
+                request.headers['Sec-Ch-Ua-Platform-Version'] = '"15.0.0"'
 
             if request.url.startswith('https://login.microsoftonline.com/'):
                 if '/authorize' in request.url or '/login' in request.url or '/kmsi' in request.url or '/reprocess' in request.url or '/resume' in request.url:
@@ -400,11 +401,11 @@ class SeleniumAuthentication():
             if self.auth.user_agent:
                 request.headers['User-Agent'] = self.auth.user_agent
             else:
-                request.headers['User-Agent'] = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.5060.134 Safari/537.36 Edg/103.0.1264.71'
-            request.headers['Sec-Ch-Ua'] = '" Not;A Brand";v="99", "Microsoft Edge";v="103", "Chromium";v="103"'
+                request.headers['User-Agent'] = DEFAULT_USER_AGENT
+            request.headers['Sec-Ch-Ua'] = '"Chromium";v="134", "Microsoft Edge";v="134", "Not:A-Brand";v="24"'
             request.headers['Sec-Ch-Ua-Mobile'] =  '?0'
             request.headers['Sec-Ch-Ua-Platform'] =  '"Windows"'
-            request.headers['Sec-Ch-Ua-Platform-Version'] = '"10.0.0"'
+            request.headers['Sec-Ch-Ua-Platform-Version'] = '"15.0.0"'
 
             if request.url.startswith('https://autologon.microsoftazuread-sso.com/'):
                 if '/winauth/sso' in request.url and krbdata:
@@ -426,11 +427,11 @@ class SeleniumAuthentication():
             if self.auth.user_agent:
                 request.headers['User-Agent'] = self.auth.user_agent
             else:
-                request.headers['User-Agent'] = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.5060.134 Safari/537.36 Edg/103.0.1264.71'
-            request.headers['Sec-Ch-Ua'] = '" Not;A Brand";v="99", "Microsoft Edge";v="103", "Chromium";v="103"'
+                request.headers['User-Agent'] = DEFAULT_USER_AGENT
+            request.headers['Sec-Ch-Ua'] = '"Chromium";v="134", "Microsoft Edge";v="134", "Not:A-Brand";v="24"'
             request.headers['Sec-Ch-Ua-Mobile'] =  '?0'
             request.headers['Sec-Ch-Ua-Platform'] =  '"Windows"'
-            request.headers['Sec-Ch-Ua-Platform-Version'] = '"10.0.0"'
+            request.headers['Sec-Ch-Ua-Platform-Version'] = '"15.0.0"'
             if request.headers['Cookie']:
                 existing = request.headers['Cookie']
             else:
@@ -455,11 +456,11 @@ class SeleniumAuthentication():
             if self.auth.user_agent:
                 request.headers['User-Agent'] = self.auth.user_agent
             else:
-                request.headers['User-Agent'] = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; WebView/3.0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.102 Safari/537.36 Edge/18.19044'
-                request.headers['Sec-Ch-Ua'] = '" Not;A Brand";v="99", "Microsoft Edge";v="103", "Chromium";v="103"'
+                request.headers['User-Agent'] = DEFAULT_USER_AGENT
+                request.headers['Sec-Ch-Ua'] = '"Chromium";v="134", "Microsoft Edge";v="134", "Not:A-Brand";v="24"'
                 request.headers['Sec-Ch-Ua-Mobile'] =  '?0'
                 request.headers['Sec-Ch-Ua-Platform'] =  '"Windows"'
-                request.headers['Sec-Ch-Ua-Platform-Version'] = '"10.0.0"'
+                request.headers['Sec-Ch-Ua-Platform-Version'] = '"15.0.0"'
 
             if request.url.startswith('https://login.microsoftonline.com') and self.deviceauth.prt:
                 if '/authorize' in request.url or '/login' in request.url or '/kmsi' in request.url or '/reprocess' in request.url or '/resume' in request.url:
@@ -614,7 +615,7 @@ class SeleniumAuthentication():
                     "Origin": "https://teams.microsoft.com",
                     "Content-Type": "application/x-www-form-urlencoded",
                     "Upgrade-Insecure-Requests": "1",
-                    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36 Edg/131.0.0.0 Teams/24295.605.3225.8804/49",
+                    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36 Edg/134.0.0.0 Teams/25045.1000.3442.5765/49",
                     "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7",
                     "Sec-Fetch-Site": "cross-site",
                     "Sec-Fetch-Mode": "navigate",
@@ -638,7 +639,7 @@ class SeleniumAuthentication():
                     "X-Featureversion": "2",
                     "Accept": "application/json;odata=verbose",
                     "Content-Type": "application/json;odata=verbose",
-                    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36 Edg/131.0.0.0 Teams/24295.605.3225.8804/49",
+                    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36 Edg/134.0.0.0 Teams/25045.1000.3442.5765/49",
                     "Origin": spohost,
                     "Sec-Fetch-Site": "same-origin",
                     "Sec-Fetch-Mode": "cors",

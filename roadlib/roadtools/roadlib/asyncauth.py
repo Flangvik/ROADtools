@@ -25,7 +25,7 @@ from cryptography.hazmat.primitives.serialization import pkcs12
 from cryptography import x509
 from roadtools.roadlib.constants import WELLKNOWN_RESOURCES, WELLKNOWN_CLIENTS, WELLKNOWN_USER_AGENTS, \
     DSSO_BODY_KERBEROS, DSSO_BODY_USERPASS, SAML_TOKEN_TYPE_V1, SAML_TOKEN_TYPE_V2, GRANT_TYPE_SAML1_1, \
-    WSS_SAML_TOKEN_PROFILE_V1_1, WSS_SAML_TOKEN_PROFILE_V2, GRANT_TYPE_SAML2
+    WSS_SAML_TOKEN_PROFILE_V1_1, WSS_SAML_TOKEN_PROFILE_V2, GRANT_TYPE_SAML2, DEFAULT_USER_AGENT
 from roadtools.roadlib.wstrust import Mex, build_rst, parse_wstrust_response
 from roadtools.roadlib.auth import Authentication, AuthenticationException, get_data
 import requests
@@ -694,7 +694,7 @@ class AsyncAuthentication(Authentication):
         '''
         headers = {
             'x-client-SKU': 'PCL.Desktop',
-            'x-client-Ver': '3.19.7.16602',
+            'x-client-Ver': '4.65.0.0',
             'x-client-CPU': 'x64',
             'x-client-OS': 'Microsoft Windows NT 10.0.18363.0',
             'x-ms-PKeyAuth': '1.0',
@@ -854,9 +854,9 @@ class AsyncAuthentication(Authentication):
             'redirect_uri': 'https://login.microsoftonline.com/common/oauth2/nativeclient',
             'client-request-id': str(uuid.uuid4()),
             'x-client-SKU': 'PCL.Desktop',
-            'x-client-Ver': '3.19.7.16602',
+            'x-client-Ver': '4.65.0.0',
             'x-client-CPU': 'x64',
-            'x-client-OS': 'Microsoft Windows NT 10.0.19569.0',
+            'x-client-OS': 'Microsoft Windows NT 10.0.26100.0',
             'site_id': 501358,
             'sso_nonce': nonce,
             'mscrid': str(uuid.uuid4())
@@ -876,7 +876,7 @@ class AsyncAuthentication(Authentication):
         }
         if not self.user_agent:
             # Add proper user agent if we don't have one yet
-            headers['User-Agent'] = 'Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 10.0; Win64; x64; Trident/7.0; .NET4.0C; .NET4.0E)'
+            headers['User-Agent'] = DEFAULT_USER_AGENT
 
         cookies = {
             'x-ms-RefreshTokenCredential': cookie
