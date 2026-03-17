@@ -26,7 +26,7 @@ from cryptography.hazmat.primitives.serialization import pkcs12
 from cryptography import x509
 from roadtools.roadlib.constants import WELLKNOWN_RESOURCES, WELLKNOWN_CLIENTS, WELLKNOWN_USER_AGENTS, \
     DSSO_BODY_KERBEROS, DSSO_BODY_USERPASS, SAML_TOKEN_TYPE_V1, SAML_TOKEN_TYPE_V2, GRANT_TYPE_SAML1_1, \
-    WSS_SAML_TOKEN_PROFILE_V1_1, WSS_SAML_TOKEN_PROFILE_V2, GRANT_TYPE_SAML2
+    WSS_SAML_TOKEN_PROFILE_V1_1, WSS_SAML_TOKEN_PROFILE_V2, GRANT_TYPE_SAML2, DEFAULT_USER_AGENT
 from roadtools.roadlib.wstrust import Mex, build_rst, parse_wstrust_response
 import requests
 import jwt
@@ -61,7 +61,7 @@ class Authentication():
         self.outfile = None
         self.debug = False
         self.scope = None
-        self.user_agent = None
+        self.user_agent = DEFAULT_USER_AGENT
         self.use_cae = False
         self.claims = None
         self.use_pkce = False
@@ -1014,7 +1014,7 @@ class Authentication():
         '''
         headers = {
             'x-client-SKU': 'PCL.Desktop',
-            'x-client-Ver': '3.19.7.16602',
+            'x-client-Ver': '4.65.0.0',
             'x-client-CPU': 'x64',
             'x-client-OS': 'Microsoft Windows NT 10.0.18363.0',
             'x-ms-PKeyAuth': '1.0',
@@ -1293,32 +1293,39 @@ class Authentication():
         """
         return self.get_srv_challenge()['Nonce']
 
-    def get_prt_cookie_nonce(self):
+    def get_prt_cookie_nonce(self, redirect_uri=None):
         """
-        Request a nonce to sign in with. This nonce is taken from the sign-in page, which
-        is how Chrome processes it, but it could probably also be obtained using the much
-        simpler request from the get_srv_challenge function.
-        This function is not used anymore but is still here for compatibility purposes
+        Request a nonce to sign in with. This nonce is taken from the sign-in page,
+        which is how Chrome processes it. Unlike get_srv_challenge_nonce(), this method
+        passes client_id and resource to the authorize endpoint, producing a nonce
+        scoped to the specific authorization context.
         """
+        redirurl = redirect_uri or self.get_redirect_for_client(self.client_id, interactive=False, broker=True)
+        authority_uri = self.get_authority_url()
         params = {
-            'resource': self.resource_uri,
             'client_id': self.client_id,
             'response_type': 'code',
             'haschrome': '1',
-            'redirect_uri': 'https://login.microsoftonline.com/common/oauth2/nativeclient',
+            'redirect_uri': redirurl,
             'client-request-id': str(uuid.uuid4()),
             'x-client-SKU': 'PCL.Desktop',
-            'x-client-Ver': '3.19.7.16602',
+            'x-client-Ver': '4.65.0.0',
             'x-client-CPU': 'x64',
-            'x-client-OS': 'Microsoft Windows NT 10.0.19569.0',
+            'x-client-OS': 'Microsoft Windows NT 10.0.26100.0',
             'site_id': 501358,
             'mscrid': str(uuid.uuid4())
         }
+        if self.scope:
+            params['scope'] = self.scope
+            url = f'{authority_uri}/oauth2/v2.0/authorize'
+        else:
+            params['resource'] = self.resource_uri
+            url = f'{authority_uri}/oauth2/authorize'
         headers = {
-            'User-Agent': 'Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 10.0; Win64; x64; Trident/7.0; .NET4.0C; .NET4.0E)',
+            'User-Agent': DEFAULT_USER_AGENT,
             'UA-CPU': 'AMD64',
         }
-        res = self.requests_get('https://login.microsoftonline.com/Common/oauth2/authorize', params=params, headers=headers, allow_redirects=False)
+        res = self.requests_get(url, params=params, headers=headers, allow_redirects=False)
         if self.debug:
             with open('roadtools.debug.html','w') as outfile:
                 outfile.write(str(res.headers))
@@ -1421,9 +1428,9 @@ class Authentication():
             'redirect_uri': 'https://login.microsoftonline.com/common/oauth2/nativeclient',
             'client-request-id': str(uuid.uuid4()),
             'x-client-SKU': 'PCL.Desktop',
-            'x-client-Ver': '3.19.7.16602',
+            'x-client-Ver': '4.65.0.0',
             'x-client-CPU': 'x64',
-            'x-client-OS': 'Microsoft Windows NT 10.0.19569.0',
+            'x-client-OS': 'Microsoft Windows NT 10.0.26100.0',
             'site_id': 501358,
             'sso_nonce': nonce,
             'mscrid': str(uuid.uuid4())
@@ -1443,7 +1450,7 @@ class Authentication():
         }
         if not self.user_agent:
             # Add proper user agent if we don't have one yet
-            headers['User-Agent'] = 'Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 10.0; Win64; x64; Trident/7.0; .NET4.0C; .NET4.0E)'
+            headers['User-Agent'] = DEFAULT_USER_AGENT
 
         cookies = {
             'x-ms-RefreshTokenCredential': cookie
@@ -1940,7 +1947,8 @@ class Authentication():
                     return self.authenticate_device_code_native_v2()
                 return self.authenticate_device_code_native()
             if args.prt_init:
-                nonce = self.get_srv_challenge_nonce()
+                redirurl = args.redirect_url or self.get_redirect_for_client(self.client_id, interactive=False, broker=True)
+                nonce = self.get_prt_cookie_nonce(redirect_uri=redirurl)
                 if nonce:
                     print(f'Requested nonce from server to use with ROADtoken: {nonce}')
                 return False
