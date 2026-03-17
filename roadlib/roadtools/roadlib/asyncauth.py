@@ -696,7 +696,7 @@ class AsyncAuthentication(Authentication):
             'x-client-SKU': 'PCL.Desktop',
             'x-client-Ver': '4.65.0.0',
             'x-client-CPU': 'x64',
-            'x-client-OS': 'Microsoft Windows NT 10.0.18363.0',
+            'x-client-OS': 'Microsoft Windows NT 10.0.26100.0',
             'x-ms-PKeyAuth': '1.0',
             'client-request-id': '19ac39db-81d2-4713-8046-b0b7240592be',
             'return-client-request-id': 'true',
