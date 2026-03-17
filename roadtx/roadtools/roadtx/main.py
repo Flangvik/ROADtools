@@ -18,7 +18,12 @@ from roadtools.roadtx.federation import EncryptedPFX, SAMLSigner, encode_object_
 import pyotp
 import requests
 
-RR_HELP = 'ROADtools Token eXchange by Dirk-jan Mollema (@_dirkjan) / Outsider Security (outsidersecurity.nl)'
+FORK_VERSION = '1.0.0-flangvik'
+RR_HELP = f'''ROADtools Token eXchange (roadtx) v{FORK_VERSION}
+Fork by @Flangvik | Original by Dirk-jan Mollema (@_dirkjan) / Outsider Security
+https://github.com/Flangvik/ROADtools
+
+Changes: context-scoped PRT nonces, updated browser/OS fingerprints, default Edge UA'''
 
 def main():
     # Primary argument parser

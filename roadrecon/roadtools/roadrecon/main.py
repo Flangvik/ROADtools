@@ -4,8 +4,10 @@ import os
 import importlib
 from roadtools.roadlib.auth import Authentication
 from roadtools.roadrecon.gather import getargs as getgatherargs
-RR_HELP = '''ROADrecon - The Azure AD exploration tool.
-By @_dirkjan - dirkjanm.io
+FORK_VERSION = '1.0.0-flangvik'
+RR_HELP = f'''ROADrecon - The Azure AD exploration tool. v{FORK_VERSION}
+Fork by @Flangvik | Original by @_dirkjan - dirkjanm.io
+https://github.com/Flangvik/ROADtools
 
 To get started, use one of the subcommands. Each command has a help feature (roadrecon <command> -h).
 

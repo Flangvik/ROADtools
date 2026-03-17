@@ -1996,7 +1996,7 @@ class Authentication():
             print('Tokens were written to {}'.format(self.outfile))
 
 def main():
-    parser = argparse.ArgumentParser(add_help=True, description='ROADtools Authentication utility', formatter_class=argparse.RawDescriptionHelpFormatter)
+    parser = argparse.ArgumentParser(add_help=True, description='ROADtools Authentication utility v1.0.0-flangvik\nFork by @Flangvik | https://github.com/Flangvik/ROADtools', formatter_class=argparse.RawDescriptionHelpFormatter)
     auth = Authentication()
     auth.get_sub_argparse(parser)
     if len(sys.argv) < 2:
